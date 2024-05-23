@@ -17,7 +17,7 @@ const useFetch = (endpoint) => {
         try {
             const response = await axios.request
             (options);
-            setData(response.data.data);
+            setData(response.data);
             setIsLoading(false);
         }catch (error){
             setError(error);
@@ -29,7 +29,7 @@ const useFetch = (endpoint) => {
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [endpoint]);
 
     const refetch = () => {
         setIsLoading(true);

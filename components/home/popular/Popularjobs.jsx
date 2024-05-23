@@ -1,50 +1,47 @@
-import { useState } from 'react'
-import { View, Text , TouchableOpacity , ActivityIndicator , FlatList} from 'react-native'
-import { useRouter } from 'expo-router'
-import styles from './popularjobs.style'
-import { COLORS , SIZES} from '../../../constants';
+import React from 'react';
+import { View, Text, TouchableOpacity, ActivityIndicator, FlatList } from 'react-native';
+import { useRouter } from 'expo-router';
+import styles from './popularjobs.style';
+import { COLORS, SIZES } from '../../../constants';
 import PopularJobCard from '../../common/cards/popular/PopularJobCard';
-import { isLoading } from 'expo-font';
-import useFetch from ' ../../../hook/useFetch'
+import useFetch from '../../../hook/useFetch';
 
 const Popularjobs = () => {
   const router = useRouter();
-  const {data ,isLoading , error} = useFetch
-  ("api/proses/nim/101");
-
-  // console.log(data);
+  const { data, isLoading, error } = useFetch('api/proses/nim/101');
+  // const [selectedJob, setSelectedJob] = useState();
+  
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}> Kelas</Text>
+        <Text style={styles.headerTitle}>Kelas</Text>
         <TouchableOpacity>
-          <Text style={styles.headerBtn}> Show All</Text>
+          <Text style={styles.headerBtn}>Show All</Text>
         </TouchableOpacity>
       </View>
 
-      <View style={styles.cardscontainer}>
+      <View style={styles.cardsContainer}>
         {isLoading ? (
-          <ActivityIndicator size="large" colors={COLORS.primary} />
+          <ActivityIndicator size='large' color={COLORS.primary} />
         ) : error ? (
-          <Text>There is an error</Text>
+          <Text>Something went wrong</Text>
         ) : (
           <FlatList
-            data={[1,2,3,4]}
-            renderItem={({item}) =>(
+            data={data}
+            renderItem={({ item }) => (
               <PopularJobCard
                 item={item}
               />
             )}
-            keyExtractor={item => item?.idKelas}
+            keyExtractor={(item) => item.idKelas}
             contentContainerStyle={{ columnGap: SIZES.medium }}
             horizontal
           />
         )}
       </View>
-
     </View>
-  )
-}
+  );
+};
 
-export default Popularjobs
+export default Popularjobs;

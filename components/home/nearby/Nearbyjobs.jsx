@@ -1,12 +1,10 @@
 import React from 'react'
-import { View, Text } from 'react-native'
-
-import styles from './nearbyjobs.style'
+import { View, Text , SafeAreaView, ScrollView , ActivityIndicator, RefreshControl} from 'react-native'
 
 const Nearbyjobs = () => {
   return (
     <View>
-      <Text>Nearbyjobs</Text>
+      <Text>Evaluasi</Text>
     </View>
   )
 }

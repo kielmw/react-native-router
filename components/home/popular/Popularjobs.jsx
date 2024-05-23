@@ -1,4 +1,4 @@
-import React from 'react';
+import React , { useState}from 'react';
 import { View, Text, TouchableOpacity, ActivityIndicator, FlatList } from 'react-native';
 import { useRouter } from 'expo-router';
 import styles from './popularjobs.style';
@@ -9,8 +9,12 @@ import useFetch from '../../../hook/useFetch';
 const Popularjobs = () => {
   const router = useRouter();
   const { data, isLoading, error } = useFetch('api/proses/nim/101');
-  // const [selectedJob, setSelectedJob] = useState();
-  
+  const [selectedJob, setSelectedJob] = useState();
+
+  const handleCardPress = (item) => {
+    router.push(`/job-details/${item.idKelas}`);
+    setSelectedJob(item.idKelas);
+  };
 
   return (
     <View style={styles.container}>
@@ -32,6 +36,8 @@ const Popularjobs = () => {
             renderItem={({ item }) => (
               <PopularJobCard
                 item={item}
+                selectedJob={selectedJob}
+                handleCardPress={handleCardPress}
               />
             )}
             keyExtractor={(item) => item.idKelas}

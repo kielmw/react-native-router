@@ -2,15 +2,14 @@ import { useState , useEffect } from 'react'
 import axios from 'axios'
 import { findNodeHandle } from 'react-native';
 
-const useFetch = (endpoint , query) => {
+const useFetch = (endpoint) => {
     const [data , setData] = useState([]);
     const [isLoading, setIsLoading] = useState (false);
     const [error , setError] = useState (null);
 
     const options = {
-        method: 'GET ',
-        url: `https://6292-182-253-50-137.ngrok-free.app/${endpoint}` ,
-        params: {...query}
+        method:"GET",
+        url:`https://e380-182-253-50-137.ngrok-free.app/${endpoint}`
     };
 
     const fetchData = async () =>{
@@ -18,7 +17,6 @@ const useFetch = (endpoint , query) => {
         try {
             const response = await axios.request
             (options);
-
             setData(response.data.data);
             setIsLoading(false);
         }catch (error){
@@ -28,7 +26,7 @@ const useFetch = (endpoint , query) => {
             setIsLoading(false);
         }
     }
-    
+
     useEffect(() => {
         fetchData();
     }, []);
@@ -40,3 +38,5 @@ const useFetch = (endpoint , query) => {
 
     return {data , isLoading , error , refetch};
 }
+
+export default useFetch;

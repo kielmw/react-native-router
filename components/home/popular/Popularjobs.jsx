@@ -10,6 +10,10 @@ import useFetch from ' ../../../hook/useFetch'
 const Popularjobs = () => {
   const router = useRouter();
   const {data ,isLoading , error} = useFetch
+  ("api/proses/nim/101");
+
+  // console.log(data);
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -18,25 +22,27 @@ const Popularjobs = () => {
           <Text style={styles.headerBtn}> Show All</Text>
         </TouchableOpacity>
       </View>
+
       <View style={styles.cardscontainer}>
         {isLoading ? (
           <ActivityIndicator size="large" colors={COLORS.primary} />
         ) : error ? (
-          <Text>Something went wrong</Text>
+          <Text>There is an error</Text>
         ) : (
           <FlatList
-            data={[1, 2, 3, 4]}
+            data={[1,2,3,4]}
             renderItem={({item}) =>(
               <PopularJobCard
                 item={item}
               />
             )}
-            keyExtractor={item => item?.job_id}
-            contentContainerStyle={{ columngGap: SIZES.medium }}
+            keyExtractor={item => item?.idKelas}
+            contentContainerStyle={{ columnGap: SIZES.medium }}
             horizontal
           />
         )}
       </View>
+
     </View>
   )
 }

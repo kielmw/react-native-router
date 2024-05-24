@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import styles from './popularjobcard.style';
 
-const PopularJobCard = ({ item, selectedJob, handleCardPress }) => {
+const PopularJobCard = ({ item, selectedJob ,handleCardPress }) => {
   // const navigation = useNavigation();
 
   // const handleCardPress = () => {

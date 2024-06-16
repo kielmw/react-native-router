@@ -9,7 +9,7 @@ const useFetch = (endpoint) => {
 
     const options = {
         method:"GET",
-        url:`https://8074-182-253-50-137.ngrok-free.app/${endpoint}`
+        url:`https://e7b1-182-253-50-134.ngrok-free.app/${endpoint}`
     };
 
     const fetchData = async () =>{

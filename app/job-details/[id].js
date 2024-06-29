@@ -13,7 +13,7 @@ const JobDetails = () => {
   const { data: detailData, isLoading, error } = useFetch(`api/proses/${id}`);
 
   const handleDownload = (idKelas, pdfId, fileName) => {
-    const downloadUrl = `https://cb59-182-1-83-209.ngrok-free.app/api/proses/pdf/download/${idKelas}/${pdfId}`;
+    const downloadUrl = `https://c32e-182-1-82-205.ngrok-free.app/api/proses/pdf/download/${idKelas}/${pdfId}`;
     Linking.openURL(downloadUrl);
   };
 

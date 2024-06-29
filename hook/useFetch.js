@@ -1,42 +1,39 @@
-import { useState , useEffect } from 'react'
-import axios from 'axios'
-import { findNodeHandle } from 'react-native';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const useFetch = (endpoint) => {
-    const [data , setData] = useState([]);
-    const [isLoading, setIsLoading] = useState (false);
-    const [error , setError] = useState (null);
+    const [data, setData] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     const options = {
-        method:"GET",
-        url:`https://1cac-119-2-48-15.ngrok-free.app/${endpoint}`
+        method: "GET",
+        url: `https://cb59-182-1-83-209.ngrok-free.app/${endpoint}`
     };
 
-    const fetchData = async () =>{
+    const fetchData = async () => {
         setIsLoading(true);
         try {
-            const response = await axios.request
-            (options);
+            const response = await axios.request(options);
             setData(response.data);
-            setIsLoading(false);
-        }catch (error){
+        } catch (error) {
             setError(error);
-            alert('there is an error')
-        }finally{
+            alert('There is an error');
+        } finally {
             setIsLoading(false);
         }
-    }
+    };
 
     useEffect(() => {
         fetchData();
-    }, [endpoint]);
+    }, [endpoint]); // It's better to use `options` as a dependency, but `endpoint` is okay if only it changes.
 
     const refetch = () => {
         setIsLoading(true);
-        fetchData;
-    }
+        fetchData();
+    };
 
-    return {data , isLoading , error , refetch};
-}
+    return { data, isLoading, error, refetch };
+};
 
 export default useFetch;

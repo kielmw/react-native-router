@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Button, Text } from 'react-native';
 import { Audio } from 'expo-av';
 import { useRouter } from 'expo-router';
-import { COLORS , icons , images , SIZES , FONT} from '../../../constants';
+import { COLORS, FONT, SIZES } from '../../../constants';
 import axios from 'axios';
 
 export default function AudioPages() {
@@ -107,44 +107,63 @@ export default function AudioPages() {
 
     return (
         <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.headerTitle}>Spelling</Text>
-        </View>  
-        <View style={styles.container}>
-            {/* <Button title="Back" onPress={() => router.back()} /> */}
-            {response && response.length == 1 ? <Text style={styles.mainText}>{response}</Text> : <Text>Press the button to start recording</Text>}
-            <View>
-                <Button
-                    title={recording ? 'Stop Recording' : 'Start Recording'}
-                    onPress={recording ? stopRecording : startRecording}
-                />
-                <Button
-                    title={sound ? 'Stop Playback' : 'Play Recording'}
-                    onPress={sound ? stopPlayback : playRecording}
-                    disabled={!lastSoundUrl}
-                />
+            <View style={styles.header}>
+                <Text style={styles.headerTitle}>Spelling</Text>
             </View>
-        </View>
+            <View style={styles.centerContainer}>
+                {response && response.length == 1 ? (
+                    <Text style={styles.mainText}>{response}</Text>
+                ) : (
+                    <Text style={styles.instructionsText}>Press the button to start recording</Text>
+                )}
+                <View>
+                    <Button
+                        title={recording ? 'Stop Recording' : 'Start Recording'}
+                        onPress={recording ? stopRecording : startRecording}
+                    />
+                    <Button
+                        title={sound ? 'Stop Playback' : 'Play Recording'}
+                        onPress={sound ? stopPlayback : playRecording}
+                        disabled={!lastSoundUrl}
+                    />
+                </View>
+            </View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    mainText: {
-        fontSize: 64,
-        color: 'black',
-    },
     container: {
+        flex: 1,
         marginTop: SIZES.xLarge,
-      },
-      header: {
+    },
+    header: {
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-      },
-      headerTitle: {
+    },
+    headerTitle: {
         fontSize: SIZES.large,
         fontFamily: FONT.medium,
         color: COLORS.primary,
-      },
+    },
+    centerContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    mainText: {
+        fontSize: 64,
+        color: 'black',
+        textAlign: 'center',
+    },
+    instructionsText: {
+        fontSize: SIZES.medium,
+        fontFamily: FONT.medium,
+        color: 'black',
+        textAlign: 'center',
+        marginTop: 20,
+        marginBottom: 20,
+        color: COLORS.primary,
+    },
 });

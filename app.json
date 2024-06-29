@@ -8,6 +8,17 @@
       "expo-router"
     ],
     "name": "GUI",
-    "slug": "GUI"
+    "slug": "GUI",
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "05da1081-59f5-4bca-a1be-3e4b49cb47f2"
+      }
+    },
+    "android": {
+      "package": "com.kielmw.GUI"
+    }
   }
 }

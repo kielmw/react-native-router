@@ -1,25 +1,26 @@
 import React from 'react';
-import { View, Text, ActivityIndicator, StyleSheet, TouchableOpacity, Alert, Share, ScrollView, Linking } from 'react-native';
+import { View, Text, ActivityIndicator, StyleSheet, TouchableOpacity, ScrollView, Linking } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 import { Stack } from 'expo-router';
 import { COLORS } from '../../constants';
 import useFetch from '../../hook/useFetch';
-import { useRoute } from '@react-navigation/native';
 
 const JobDetails = () => {
   const route = useRoute();
-  const { id, namaKelas } = route.params;
+  const { id, namaKelas, deskripsiKelas } = route.params;
 
   const { data: detailData, isLoading, error } = useFetch(`api/proses/${id}`);
 
   const handleDownload = (idKelas, pdfId, fileName) => {
-    const downloadUrl = `https://e7b1-182-253-50-134.ngrok-free.app/api/proses/pdf/download/${idKelas}/${pdfId}`;
+    const downloadUrl = `https://1cac-119-2-48-15.ngrok-free.app/api/proses/pdf/download/${idKelas}/${pdfId}`;
     Linking.openURL(downloadUrl);
   };
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={[styles.container, styles.pageContainer]}>
-        <Text style={styles.title}>{namaKelas}</Text>
+        <Text style={styles.className}>{detailData.namaKelas}</Text>
+        <Text style={styles.classDescription}>{detailData.deskripsiKelas}</Text>
         {isLoading ? (
           <ActivityIndicator size="large" color={COLORS.primary} />
         ) : error ? (
@@ -67,6 +68,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
   },
+  className: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginBottom: 10,
+  },
+  classDescription: {
+    fontStyle: 'italic',
+    fontSize: 16,
+    marginBottom: 20,
+  },
   pertemuanContainer: {
     backgroundColor: '#eee',
     padding: 10,
@@ -96,4 +107,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export default JobDetails;
+export default function Page() {
+  return (
+    <>
+      <Stack.Screen options={{ title: 'Detail Kelas' }} />
+      <JobDetails />
+    </>
+  );
+}

@@ -8,7 +8,7 @@ const useFetch = (endpoint) => {
 
     const options = {
         method: "GET",
-        url: `https://2325-114-125-70-176.ngrok-free.app/${endpoint}`
+        url: `https://kielproses.loca.lt/${endpoint}`
     };
 
     const fetchData = async () => {

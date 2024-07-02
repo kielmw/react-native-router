@@ -19,6 +19,11 @@
     },
     "android": {
       "package": "com.kielmw.GUI"
+    },
+    "splash": {
+      "image": "assets/favicon.png",  
+      "resizeMode": "contain",        
+      "backgroundColor": "#ffffff"    
     }
   }
 }

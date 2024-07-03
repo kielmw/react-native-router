@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, ScrollView, View } from 'react-native';
+import { SafeAreaView, ScrollView, View, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { COLORS, SIZES } from '../constants';
 import { Welcome } from '../components';
@@ -9,7 +9,7 @@ import ScreenHeaderBtn from '../components/ScreenHeaderBtn';
 import { icons, images } from '../constants';
 import ErrorBoundary from '../ErrorBoundary';
 
-const Home = ({ username }) => {
+const Home = ({ username, handleLogout }) => {
     const navigation = useNavigation();
 
     React.useEffect(() => {
@@ -20,11 +20,11 @@ const Home = ({ username }) => {
                 <ScreenHeaderBtn iconUrl={icons.menu} dimension="60%" />
             ),
             headerRight: () => (
-                <ScreenHeaderBtn iconUrl={images.profile} dimension="100%" />
+                <Text style={{ marginRight: 10, color: COLORS.primary }} onPress={handleLogout}>Logout</Text>
             ),
             headerTitle: ""
         });
-    }, [navigation]);
+    }, [navigation, handleLogout]);
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>

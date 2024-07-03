@@ -13,6 +13,11 @@ const Stack = createStackNavigator();
 const Navigator = () => {
   const [username, setUsername] = useState(null);
 
+  const handleLogout = () => {
+    // Perform logout actions, such as resetting username state
+    setUsername(null);
+  };
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName={username ? "Home" : "LoginPage"}>
@@ -21,15 +26,15 @@ const Navigator = () => {
             {(props) => <LoginPage {...props} setUsername={setUsername} />}
           </Stack.Screen>
         ) : (
-          <Stack.Screen name="Home">
-            {(props) => <Home {...props} username={username} />}
-          </Stack.Screen>
+          <>
+            <Stack.Screen name="Home">
+              {(props) => <Home {...props} username={username} handleLogout={handleLogout} />}
+            </Stack.Screen>
+            <Stack.Screen name="Popularjobs" component={Popularjobs} />
+            <Stack.Screen name="JobDetails" component={JobDetails} />
+            <Stack.Screen name="AudioPages" component={AudioPages} />
+          </>
         )}
-        <Stack.Screen name="Popularjobs">
-          {(props) => <Popularjobs {...props} username={username} />}
-        </Stack.Screen>
-        <Stack.Screen name="JobDetails" component={JobDetails} />
-        <Stack.Screen name="AudioPages" component={AudioPages} />
       </Stack.Navigator>
     </NavigationContainer>
   );

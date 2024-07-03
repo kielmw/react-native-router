@@ -1,19 +1,19 @@
 import React, { useState, useCallback } from 'react';
 import { View, Text, TouchableOpacity, ActivityIndicator, FlatList, RefreshControl } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useNavigation } from '@react-navigation/native'; // Import useNavigation hook
 import styles from './popularjobs.style';
 import { COLORS, SIZES } from '../../../constants';
 import PopularJobCard from '../../common/cards/popular/PopularJobCard';
 import useFetch from '../../../hook/useFetch';
 
-const Popularjobs = () => {
-  const router = useRouter();
-  const { data, isLoading, error, refetch } = useFetch('api/proses/nim/123456789');
-  const [selectedJob, setSelectedJob] = useState();
+const Popularjobs = ({ username }) => {
+  const navigation = useNavigation(); // Initialize navigation hook
+  const { data, isLoading, error, refetch } = useFetch(`api/proses/nim/${username}`);
+  const [selectedJob, setSelectedJob] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
 
   const handleCardPress = (item) => {
-    router.push(`/job-details/${item.idKelas}`);
+    navigation.navigate('JobDetails', { idKelas: item.idKelas }); // Navigate to 'JobDetails' screen
     setSelectedJob(item.idKelas);
   };
 
@@ -46,14 +46,14 @@ const Popularjobs = () => {
                 handleCardPress={() => handleCardPress(item)}
               />
             )}
-            keyExtractor={(item) => item.idKelas}
+            keyExtractor={(item) => item.idKelas.toString()} // Ensure keyExtractor is a string
             contentContainerStyle={{ columnGap: SIZES.medium }}
             horizontal
             refreshControl={
               <RefreshControl
                 refreshing={refreshing}
                 onRefresh={onRefresh}
-                colors={[COLORS.primary]} // Customize refresh indicator color
+                colors={[COLORS.primary]}
               />
             }
           />

@@ -1,16 +1,15 @@
 import React from 'react';
 import { View, Text, ActivityIndicator, StyleSheet, TouchableOpacity, ScrollView, Linking } from 'react-native';
-import { useRoute } from '@react-navigation/native';
-import { Stack } from 'expo-router';
+import { useRoute, useNavigation } from '@react-navigation/native'; // Import useRoute and useNavigation hooks
 import { WebView } from 'react-native-webview';
 import { COLORS } from '../../constants';
 import useFetch from '../../hook/useFetch';
 
 const JobDetails = () => {
   const route = useRoute();
-  const { id } = route.params;
+  const { idKelas } = route.params; // Extract idKelas from route.params
 
-  const { data: detailData, isLoading, error } = useFetch(`api/proses/${id}`);
+  const { data: detailData, isLoading, error } = useFetch(`api/proses/${idKelas}`);
 
   const handleDownload = (idKelas, pdfId, fileName) => {
     const downloadUrl = `https://mainly-tender-swift.ngrok-free.app/api/proses/pdf/download/${idKelas}/${pdfId}`;
@@ -38,7 +37,7 @@ const JobDetails = () => {
                         <Text style={styles.headingPertemuan}>{dataItem.headingPertemuan}</Text>
                         <Text style={styles.bodyPertemuan}>{dataItem.bodyPertemuan}</Text>
                         {dataItem.idPdf && dataItem.fileName && (
-                          <TouchableOpacity onPress={() => handleDownload(id, dataItem.idPdf, dataItem.fileName)}>
+                          <TouchableOpacity onPress={() => handleDownload(idKelas, dataItem.idPdf, dataItem.fileName)}>
                             <Text style={styles.itemText}>
                               <Text style={styles.fileNameText}>{dataItem.fileName}</Text>
                             </Text>
@@ -79,11 +78,6 @@ const styles = StyleSheet.create({
   },
   pageContainer: {
     alignItems: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 20,
   },
   className: {
     fontWeight: 'bold',
@@ -132,11 +126,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function Page() {
-  return (
-    <>
-      <Stack.Screen options={{ title: 'Detail Kelas' }} />
-      <JobDetails />
-    </>
-  );
-}
+export default JobDetails;

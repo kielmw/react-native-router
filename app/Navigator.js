@@ -43,7 +43,7 @@ const Navigator = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={username ? 'Home' : 'LoginPage'}>
+      <Stack.Navigator initialRouteName="LoginPage">
         {username == null ? (
           <Stack.Screen name="LoginPage">
             {(props) => <LoginPage {...props} setUsername={setUsername} />}

@@ -15,7 +15,8 @@
         "origin": false
       },
       "eas": {
-        "projectId": "05da1081-59f5-4bca-a1be-3e4b49cb47f2"
+        "projectId": "05da1081-59f5-4bca-a1be-3e4b49cb47f2",
+        "entryPoint" : "./node_modules/expo-router/entry.js"
       }
     },
     "android": {

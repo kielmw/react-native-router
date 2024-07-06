@@ -9,6 +9,7 @@
     ],
     "name": "GUI",
     "slug": "GUI",
+    "entryPoint" : "./node_modules/expo-router/entry.js",
     "extra": {
       "router": {
         "origin": false

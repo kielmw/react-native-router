@@ -1,15 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, ActivityIndicator, StyleSheet, TouchableOpacity, ScrollView, Linking } from 'react-native';
-import { useRoute, useNavigation } from '@react-navigation/native'; // Import useRoute and useNavigation hooks
+import { useRoute, useNavigation } from '@react-navigation/native';
 import { WebView } from 'react-native-webview';
 import { COLORS } from '../../constants';
 import useFetch from '../../hook/useFetch';
 
 const JobDetails = () => {
   const route = useRoute();
-  const { idKelas } = route.params; // Extract idKelas from route.params
+  const navigation = useNavigation();
+  const { idKelas } = route.params;
 
   const { data: detailData, isLoading, error } = useFetch(`api/proses/${idKelas}`);
+
+  useEffect(() => {
+    if (detailData) {
+      navigation.setOptions({ title: detailData.namaKelas });
+    }
+  }, [detailData, navigation]);
 
   const handleDownload = (idKelas, pdfId, fileName) => {
     const downloadUrl = `https://mainly-tender-swift.ngrok-free.app/api/proses/pdf/download/${idKelas}/${pdfId}`;

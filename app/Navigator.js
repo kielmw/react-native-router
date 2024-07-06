@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import AsyncStorage from '@react-native-async-storage/async-storage'; // Ensure this import is correct
-import JobDetails from './job-details/[id]'; // Adjust this path as necessary
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Home from './index';
 import Popularjobs from '../components/home/popular/Popularjobs';
-import AudioPages from '../components/home/audio/AudioPages';
-import Welcome from '../components/home/welcome/Welcome.jsx';
-import LoginPage from './LoginPage.js';
-import Home from '../app/index'; // Import the Home component
+import JobDetails from './job-details/[id]'; // Adjust this path as necessary
 
 const Stack = createStackNavigator();
 
@@ -28,36 +25,38 @@ const Navigator = () => {
         setIsLoading(false);
       }
     };
+
     loadUsername();
   }, []);
 
   const handleLogout = async () => {
-    // Perform logout actions, such as resetting username state and removing from AsyncStorage
-    setUsername(null);
-    await AsyncStorage.removeItem('username');
+    try {
+      // Reset local state
+      setUsername(null);
+
+      // Remove username from AsyncStorage
+      await AsyncStorage.removeItem('username');
+    } catch (error) {
+      console.error('Failed to logout:', error);
+    }
   };
 
   if (isLoading) {
-    return null; // Or some loading indicator
+    return null; // Or some loading indicator while checking username
   }
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="LoginPage">
-        {username == null ? (
-          <Stack.Screen name="LoginPage">
-            {(props) => <LoginPage {...props} setUsername={setUsername} />}
-          </Stack.Screen>
-        ) : (
-          <>
-            <Stack.Screen name="Home">
-              {(props) => <Home {...props} username={username} handleLogout={handleLogout} />}
-            </Stack.Screen>
-            <Stack.Screen name="Popularjobs" component={Popularjobs} />
-            <Stack.Screen name="JobDetails" component={JobDetails} />
-            <Stack.Screen name="AudioPages" component={AudioPages} />
-          </>
-        )}
+      <Stack.Navigator>
+        <Stack.Screen name="Home" options={{ headerShown: true}}>
+          {(props) => (
+            username ? 
+            <Home {...props} username={username} handleLogout={handleLogout} /> :
+            <Home {...props} setUsername={setUsername} />
+          )}
+        </Stack.Screen>
+        <Stack.Screen name="Popularjobs" component={Popularjobs} />
+        <Stack.Screen name="JobDetails" component={JobDetails} />
       </Stack.Navigator>
     </NavigationContainer>
   );
